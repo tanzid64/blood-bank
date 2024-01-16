@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load static %}
+{% block title %}home{% endblock title %}
+{% block content %}
+<!--Banner Start-->
+        <div class="grid grid-cols-2">
+            <div class=" bg-slate-700 flex justify-center items-center rounded-l-lg">
+                <div class="text-center">
+                    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-white md:text-5xl lg:text-6xl">Let's save life together.</h1>
+                    <p class="mb-6 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 xl:px-48 ">Sign Up to donate blood or plasma</p>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url "dashboard" %}" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                        Dashboard
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                    </a>
+                    {% else %}
+                    <a href="{% url "register" %}" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                        Sign Up
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+                <img class="h-auto w-full rounded-r-lg" src="{% static "carousel_1.png" %}" alt="image description">
+        </div>
+        <!--Banner End-->
+<!--Active Blood Doner Start-->
+<div class="my-10" id="Donor">
+    <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
+        Active Donor List
+    </div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+        <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-white bg-gray-800">
+            <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
+                <a href="{% url "homepage" %}" class="  border focus:ring-4 focus:outline-none  rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 bg-gray-900 focus:ring-blue-800">Blood Groups</a>
+                {% for data in blood_group %}
+                
+                    <a href="{% url "blood_group_wise_post" data.slug %}" class="border hover:border-gray-200 border-gray-900 bg-gray-900 dark:hover:border-gray-700  focus:ring-4 focus:outline-none rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 text-white focus:ring-gray-800">{{data.blood_type}} {{data.rh_factor}}</a>
+                
+                {% endfor %}
+            </div>
+        </caption>
+        <thead class="text-xs uppercase  bg-gray-700 text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Blood Group
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Total Donated
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Last Donation Date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donor in donors %}
+            <tr class=" border-b bg-gray-800 border-gray-700 cursor-pointer" 
+            {% if request.user.profile.id == donor.id %}onclick="window.location='{% url "profile" %}'"{% else %}onclick="window.location='{% url "mini_profile" donor.id %}'"
+            {% endif %}
+            >
+                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                        {{donor.user.first_name}} {{donor.user.last_name}}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{donor.blood_group}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{donor.total_donated}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{donor.last_donation_date}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {% if donor.is_available %}
+                        <span class="text-green-600">Available for donation.</span>
+                        {% else %}
+                        <span class="text-red-600">Not available for donation</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</div>
+<!--Active Blood Doner End-->
+<!--Activity Start-->
+        <div id="services" class="my-10">
+            <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
+                Services
+            </div>
+            <div class="grid grid-cols-4 gap-2 my-10 ms-16">
+                {% for service in data %}
+                <!--Card Here-->
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <a href="#">
+                        <img class="rounded-t-lg" src="{{service.image.url}}" alt="" />
+                    </a>
+                    <div class="p-5">
+                        <a href="#">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{service.title}}</h5>
+                        </a>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{service.description}}</p>
+                        {% if request.user.is_authenticated %}
+                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Read More
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>
+                        {% else %}
+                        <a href="{% url "register" %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Sign Up
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+<!--Activity End-->
+
+{% endblock content %}

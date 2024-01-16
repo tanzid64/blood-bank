@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+<!--Self Donation Request-->
+<div class="">
+    <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
+        My Request:
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+{% for event in events %}
+{% if request.user == event.created_by.user %}
+    <!--Event-->
+<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
+    <h5 class=" text-2xl font-bold tracking-tight text-gray-900 ">Need <span class="text-red-600">{{event.blood_group}} </span>Blood</h5>
+    <span class="text-sm text-gray-500 dark:text-gray-400">{{event.created_at}}</span>
+    <hr>
+    <p class="mb-3 text-sm text-gray-500 dark:text-gray-400">Requested By: <a href="" class="">{{event.created_by}}</a></p>
+    <p class="font-normal text-gray-700 ">Location: {{event.location}}</p>
+    <p class="mb-3 font-normal text-gray-700 ">{{event.description}}</p>
+    <!--Buttons-->
+
+    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300  ">
+        Mark as complete
+        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+    </a>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+<!--Extra Field-->
+<div class="">
+    <br> <br>
+    <a href="{% url "post_request" %}" class="text-white mt-5 border p-2 rounded-lg">Add a new request</a>
+    <hr class="my-5">
+</div>
+<!--Other's Donation Request-->
+<div class="">
+    <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
+        Other's Request:
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+{% for event in events %}
+{% if request.user != event.created_by.user %}
+    <!--Event-->
+<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
+    <h5 class=" text-2xl font-bold tracking-tight text-gray-900 ">Need <span class="text-red-600">{{event.blood_group}} </span>Blood</h5>
+    <span class="text-sm text-gray-500 dark:text-gray-400">{{event.created_at}}</span>
+    <hr>
+    <p class="mb-3 text-sm text-gray-500 dark:text-gray-400">Requested By: <a href="{% url "mini_profile" event.created_by.id %}" class="">{{event.created_by}}</a></p>
+    <p class="font-normal text-gray-700 ">Location: {{event.location}}</p>
+    <p class="mb-3 font-normal text-gray-700 ">{{event.description}}</p>
+    <!--Buttons-->
+
+    <a href="{% url "donate_blood" event.id %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300  ">
+        Accept
+        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+        </svg>
+    </a>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+
+{% endblock content %}

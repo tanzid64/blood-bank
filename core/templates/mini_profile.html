@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+<!--Profile Details-->
+<div class="p-8 w-full border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center">
+    <!--Profile Photo-->
+    <figure class="max-w-lg">
+            <img {% if object.image and object.image.url %}src="{{ object.image.url }}" {% else %}src="#"{% endif %} class="border border-red-600 rounded-full w-48 h-48" alt="profile-picture">
+        <figcaption class="mt-2 text-3xl text-center text-white">@{{object.user}}</figcaption>
+    </figure>
+    <!--Details-->
+    <div class=" max-w-2xl shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-white">
+                User database
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-green-400">
+                Successfully donated {{object.total_donated}} times through BINDU.
+            </p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Full name
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {{request.user.first_name}} {{request.user.last_name}}
+                    </dd>
+                </div>
+                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Email address
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {{request.user.email}}
+                    </dd>
+                </div>
+                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Blood Group
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {{object.blood_group}}
+                    </dd>
+                </div>
+                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Gender
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {{object.gender}}
+                    </dd>
+                </div>
+                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Last Donation Date
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {{object.last_donation_date}}
+                    </dd>
+                </div>
+                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Status
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {% if object.is_available %} <span class="text-green-500">Available for donation</span> {% else %} <span class="text-red-600">Not available for donation</span>{% endif %}
+                    </dd>
+                </div>
+                
+                <div class=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-white">
+                        Address
+                    </dt>
+                    <dd class="mt-1 text-sm text-white sm:mt-0 sm:col-span-2">
+                        {{object.street}}, {{object.city}}, {{object.post_code}}, {{object.country}}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
+{% endblock content %}
