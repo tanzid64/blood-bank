@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from account.models import UserProfile, BloodGroup
 from django.contrib import messages
 from .forms import ContactUsForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Models
 from .models import Service, ContactUs
 from history.models import DonationReport

@@ -8,9 +8,10 @@ from datetime import datetime
 from django.shortcuts import get_object_or_404
 from .forms import EditDonationRequestForm
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 # Create a Request
-class PostDonationRequest(CreateView):
+class PostDonationRequest(LoginRequiredMixin, CreateView):
     template_name='post_donation.html'
     model = DonationRequest
     form_class = EditDonationRequestForm
@@ -20,7 +21,7 @@ class PostDonationRequest(CreateView):
         messages.success(self.request, 'Request added successfully.')
         return super().form_valid(form)
 
-class EditDonationRequest(UpdateView):
+class EditDonationRequest(LoginRequiredMixin, UpdateView):
     template_name = 'post_donation.html'
     form_class = EditDonationRequestForm
     success_url = reverse_lazy('dashboard')
@@ -30,7 +31,7 @@ class EditDonationRequest(UpdateView):
         return super().form_valid(form)
 
 
-class DashboardView(ListView):
+class DashboardView(LoginRequiredMixin, ListView):
     template_name = 'dashboard.html'
     model = DonationRequest
     context_object_name = 'events'
@@ -51,7 +52,7 @@ class DashboardView(ListView):
         return queryset
 
 
-class DonationRequestAcceptView(View):
+class DonationRequestAcceptView(LoginRequiredMixin, View):
     def get(self, request, id):
         event = DonationRequest.objects.get(pk=id)
         donor = self.request.user.profile
@@ -76,7 +77,7 @@ class DonationRequestAcceptView(View):
         
         return redirect('dashboard')
 
-class ManagedOfflineView(View):
+class ManagedOfflineView(LoginRequiredMixin, View):
     def get(self, request, id):
         event = DonationRequest.objects.get(pk=id)
         event.is_accepted = True

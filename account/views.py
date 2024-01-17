@@ -13,11 +13,12 @@ from .models import UserProfile
 from django.views import View
 from django.contrib.auth.views import LogoutView, LoginView
 from history.models import DonationReport, DonationRequest
+from django.contrib.auth.mixins import LoginRequiredMixin
 #Token
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
-from django.utils.encoding import force_str 
+
 # Create your views here.
 # Registration
 class UserRegistrationView(CreateView):
@@ -66,7 +67,7 @@ def UserLogoutView(request):
     return redirect('homepage')
 
 # update or edit profile
-class UserProfileUpdateView(UpdateView):
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'profile_update.html'
     form_class = UserProfileUpdateForm
     success_url = reverse_lazy('profile')
@@ -82,7 +83,7 @@ class UserProfileUpdateView(UpdateView):
         return super().form_invalid(form)
 
 # Details Profile
-class UserProfileView(ListView):
+class UserProfileView(LoginRequiredMixin, ListView):
     template_name='profile.html'
     model = DonationReport
     def get_object(self):
