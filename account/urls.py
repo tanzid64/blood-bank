@@ -10,7 +10,7 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('update_profile/', UserProfileUpdateView.as_view(), name='update_profile'),
-    path('activate/<str:uid64>/<str:token>/', activate, name='activate'),
+    path('active/<str:uid64>/<str:token>/', activate, name='activate'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

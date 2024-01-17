@@ -17,6 +17,7 @@ from history.models import DonationReport, DonationRequest
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str 
 # Create your views here.
 # Registration
 class UserRegistrationView(CreateView):
@@ -26,9 +27,12 @@ class UserRegistrationView(CreateView):
     success_url = reverse_lazy('register')
     def form_valid(self, form):
         user = form.save()
+        print(user)
         token = default_token_generator.make_token(user)
+        print("token ", token)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        confirm_link = f"http://127.0.0.1:8000/accounts/activate/{uid}/{token}"
+        print("uid ", uid)
+        confirm_link = f"http://127.0.0.1:8000/accounts/active/{uid}/{token}"
         send_user_email('Account Confirmation Email', confirm_link, 'confirm_email.html', user.email)
         messages.success(self.request, 'User creation successfull, please check your email to active account.')
         return super().form_valid(form)
@@ -37,15 +41,15 @@ def activate(request, uid64, token):
     try:
         uid = urlsafe_base64_decode(uid64).decode()
         user = User._default_manager.get(pk=uid)
-        print(token)
+        print(user, token)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist, UnicodeDecodeError) as e:
         print(f"Error during activation: {e}")
         user = None
-    if user :
+    print(user)
+    print(token)
+    if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        # profile, created = UserProfile.objects.get_or_create(user=user)
-        # profile.save()
         login(request, user)
         messages.success(request, 'Account Verification Successful. Please update your full profile.')
         return redirect('update_profile') 

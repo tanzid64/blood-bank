@@ -1,24 +1,28 @@
-{% extends "base.html" %}
-{% block title %}login{% endblock title %}
-{% block content %}
+
 {% if form.non_field_errors %} {% for error in form.non_field_errors %}
 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
     <p class="font-bold">Error!</p>
     <p class="block sm:inline">{{ error }}</p>
 </div>
 {% endfor %} {% endif %}
-<div class="grid grid-cols-3 gap-4">
-    <div></div>
-    <div class="py-2 px-3 rounded-xl bg-white mt-12">
+    
         <div class="w-full mt-10">
-            <form method="post" class="shadow-md border border-gray-200 rounded px-8 pt-6 pb-8 mb-4">
+            <div id="ContactUs" class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
+                Contact Us
+            </div>
+            <form method="post" class="shadow-md border border-gray-200 rounded-lg px-8 pt-6 pb-8 mb-4">
                 {% csrf_token %} {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %} 
                 {% for field in form.visible_fields %}
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
                         {{ field.label }}
                     </label>
-                    <input class="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}">
+                    {% if field.name == 'problem' %}
+                    <textarea id="{{ field.id_for_label }}" name="{{ field.name }}" rows="4" class="block p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Your message..."></textarea>
+                    {% else %}
+                    <input class=" border   text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}">
+                    {% endif %}
+
                 </div>
                 {% if field.errors %} {% for error in field.errors %}
                 <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
@@ -26,12 +30,12 @@
 
                 <div class="flex items-center justify-center w-full">
                     <button class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Log In
+                        Submit
                     </button>
                 </div>
                 <p class="text-black text-center mt-4">Don't have an account ? <a href="{% url "register" %}" class="text-blue-500">Registration here</a></p>
             </form>
         </div>
-    </div>
-</div>
-{% endblock content %}
+
+
+

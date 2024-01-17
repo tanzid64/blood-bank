@@ -34,8 +34,13 @@
             <div class="z-50 hidden my-4 text-base list-none bg-gray-700 divide-y divide-gray-600 rounded-lg shadow" id="user-dropdown">
                 <div class="px-4 py-3">
                 {% if request.user.is_authenticated %}
-                <span class="block text-sm text-white">{{request.user.username}}</span>
-                <span class="block text-sm  text-white truncate ">{{request.user.email}}</span>
+                <a href="{% url "profile" %}" class="">
+                    <span class="block text-sm text-white">
+                        @{{request.user.username}}
+                        {% if request.user.is_staff %}<i class="fas fa-check-circle verified-badge"></i>{% endif %}
+                    </span> 
+                    <span class="block text-sm  text-white truncate ">{{request.user.email}}</span>
+                </a>
                 {% endif %}
                 </div>
                 <ul class="py-2" aria-labelledby="user-menu-button">
@@ -43,11 +48,13 @@
                     <li>
                         <a href="{% url "dashboard" %}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Dashboard</a>
                     </li>
+                    {% if request.user.is_staff %}
                     <li>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Admin Panel</a>
                     </li>
+                    {% endif %}
                     <li>
-                        <a href="{% url "update_profile" %}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Update Profile</a>
+                        <a href="{% url "update_profile" %}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Setting</a>
                     </li>
                     <li>
                         <a href="{% url "logout" %}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Log out</a>
@@ -81,10 +88,10 @@
                 <a href="#services" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Services</a>
             </li>
             <li>
-                <a href="{% url "profile" %}" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Profile</a>
+                <a href="#DonorList" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Donors</a>
             </li>
             <li>
-                <a href="#" class="block py-2 px-3  rounded md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Contact</a>
+                <a href="#ContactUs" class="block py-2 px-3  rounded md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Contact</a>
             </li>
             </ul>
         </div>
