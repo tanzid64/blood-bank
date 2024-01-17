@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock title %}
 {% block content %}
-<div class="grid grid-cols-4 gap-4">
-    <!--Profile Details-->
-<div class="p-8 max-w-lg border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center">
-    <!--Profile Photo-->
-    <figure class="max-w-lg">
-        <img {% if user.image and user.image.url %}src="{{ user.image.url }}" {% else %}src="#"{% endif %} class="border border-red-600 rounded-full w-48 h-48" alt="profile-picture">
-        <figcaption class=" mt-2 text-3xl text-center text-white">@{{user.user}}</figcaption>
-    </figure>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <!-- Profile Details -->
+    <div class="p-8 max-w-lg border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50 flex flex-col items-center">
+        <!-- Profile Photo -->
+        <figure class="max-w-lg">
+            <img {% if user.image and user.image.url %}src="{{ user.image.url }}" {% else %}src="#"{% endif %} class="border border-red-600 rounded-full w-48 h-48" alt="profile-picture">
+            <figcaption class="mt-2 text-3xl text-center text-white">@{{user.user}}</figcaption>
+        </figure>
     <!--Details-->
-    <div class=" max-w-2xl shadow overflow-hidden sm:rounded-lg">
+    <div class="max-w-2xl shadow overflow-hidden sm:rounded-lg mt-4">
         <div class="px-4 py-5 sm:px-6">
             <h3 class="text-lg leading-6 font-medium text-white">
                 User database
@@ -83,11 +83,11 @@
     </div>
 </div>
 <!--History-->
-<div class="col-span-3">
-    <div class="p-8 border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50">
-        <!--Blood Request-->
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+    <div class="col-span-3 md:col-span-3">
+        <div class="p-8 border border-indigo-300 rounded-2xl hover:shadow-xl hover:shadow-indigo-50">
+            <!-- Blood Request Table -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-400">
                 <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-white bg-gray-800">
                     Your Request
                 </caption>
@@ -123,10 +123,17 @@
                                 {% if event.is_accepted %} Accepted {% else %} Pending {% endif %}
                             </td>
                             <td class="px-6 py-4">
-                                {% if event.is_accepted %} <a href="{% url "mini_profile" event.report.profile.id %}" class="">{{event.report.profile.user}} </a> {% else %} Pending {% endif %}
+                                {% if event.is_accepted and event.report.profile.id %}
+                                <a href="{% url "mini_profile" event.report.profile.id %}" class="">{{event.report.profile.user}} </a> 
+                                {% elif event.is_accepted %}
+                                Managed in offline by creator
+                                {% else %} Pending {% endif %}
                             </td>
                             <td class="px-6 py-4">
-                                {% if event.is_accepted %} {{event.report.created_at}} {% else %} Pending {% endif %}
+                                {% if event.is_accepted and event.report.created_at %} {{event.report.created_at}} 
+                                {% elif event.is_accepted %}
+                                {{event.updated_at}}
+                                {% else %} Pending {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -134,9 +141,9 @@
             </table>
         </div>
         <br> <br>
-        <!--Donation Report-->
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-400">
+            <!-- Donation Report Table -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-400">
                 <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-white bg-gray-800">
                     Donation Report 
                 </caption>
@@ -176,3 +183,4 @@
 </div>
 </div>
 {% endblock content %}
+

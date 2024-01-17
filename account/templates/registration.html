@@ -5,25 +5,28 @@
 {% block header_inner %}{% tailwind_css %}{% endblock header_inner %}
 {% block content %}
 <!--Non Field Errors-->
-{% if form.non_field_errors %} {% for error in form.non_field_errors %}
-<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
-    <p class="font-bold">Error!</p>
-    <p class="block sm:inline">{{ error }}</p>
-</div>
-{% endfor %} {% endif %} 
-<div class="grid grid-cols-2">
-    <div class="px-3 rounded-xl">
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
+            <p class="font-bold">Error!</p>
+            <p class="block sm:inline">{{ error }}</p>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="md:col-span-1 px-3 rounded-xl">
         <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
             <i class="fa-solid fa-user"></i>
             Open User Account
         </div>
-    <div class="w-full border rounded-lg">
-        <form method="post" class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            {% csrf_token %} {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+        <div class="w-full border rounded-lg">
+            <form method="post" class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                {% csrf_token %} {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
 
                 <!--UserName-->
-                <div class="w-full md:w-2/2 px-3 my-6">
-                    <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="{{ form.first_name.id_for_label }}">
+                <div class="w-full px-3 my-6">
+                    <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="{{ form.username.id_for_label }}">
                         {{ form.username.label }}
                     </label> {{ form.username }} {% if form.username.errors %} {% for error in form.username.errors %}
                     <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
@@ -54,7 +57,6 @@
                     <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
                     {% endfor %} {% endif %}
                 </div>
-            
 
                 <!--Blood Group-->
                 <div class="w-full md:w-1/2 px-3 my-6">
@@ -81,20 +83,21 @@
                     {% endfor %} {% endif %}
                 </div>
 
-            {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
-            <div class="flex flex-col items-start justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    Register
-                </button>
-                <br>
-                <p class="text-white">Already have an accoun? <a href="{% url "login" %}" class="text-blue-500">LogIn here</a></p>
-            </div>
-        </form>
+                {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+                <div class="flex flex-col items-start justify-between">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Register
+                    </button>
+                    <br>
+                    <p class="text-white">Already have an account? <a href="{% url "login" %}" class="text-blue-500">LogIn here</a></p>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div class=" rounded-lg bg-center bg-blend-multiply bg-gray-400 bg-no-repeat bg-cover w-full" style="background-image: url('{% static "reg-cover.jpg" %}')">
-    <!--Image-->
+    <div class="md:col-span-1 rounded-lg bg-center bg-blend-multiply bg-gray-400 bg-no-repeat bg-cover w-full" style="background-image: url('{% static "reg-cover.jpg" %}')">
+        <!--Image-->
+    </div>
 </div>
 
 

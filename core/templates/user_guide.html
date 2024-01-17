@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% load static %}
+{% block title %}Guide{% endblock title %}
+{% block content %}
+<ul class="space-y-4 text-gray-500 list-disc list-inside dark:text-gray-400">
+    <li>
+        Unregistered User:
+        <ol class="ps-5 mt-2 space-y-1 list-decimal list-inside">
+            <li>Can see home page</li>
+            <li>Can open an account.</li>
+            <li>Can see active donor list and their profile.</li>
+        </ol>
+    </li>
+    <li>
+        Registration:
+        <ul class="ps-5 mt-2 space-y-1 list-decimal list-inside">
+            <li>An unique username and email needed.</li>
+            <li>A strong minimum 8 digits password which include at least one capital leter, small leter and special character.</li>
+            <li>An email verification link will sent through registration process, need to click it to active account.</li>
+            <li>After verification user can update profile with more information from setting menu.</li>
+        </ul>
+    </li>
+    <li>
+        Registered User:
+        <ul class="ps-5 mt-2 space-y-1 list-decimal list-inside">
+            <li>Can make blood request.</li>
+            <li>Can accept blood request.</li>
+            <li>Can donate blood once in every three months.</li>
+            <li>Can see donation and blood request history.</li>
+            <li>Can manage blood request.</li>
+            <li>Update profile picture and many more.</li>
+        </ul>
+    </li>
+</ul>
+{% endblock content %}

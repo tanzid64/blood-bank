@@ -82,16 +82,20 @@
                 <a href="{% url "homepage" %}" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:text-blue-500" aria-current="page">Home</a>
             </li>
             <li>
-                <a href="#" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">About</a>
-            </li>
-            <li>
-                <a href="#services" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Services</a>
+                <a href="{% url "guide" %}" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">User-Guide</a>
             </li>
             <li>
                 <a href="#DonorList" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Donors</a>
             </li>
             <li>
-                <a href="#ContactUs" class="block py-2 px-3  rounded md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Contact</a>
+                <a href="{% url "homepage" %}#services" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Services</a>
+            </li>
+            
+            <li>
+                <a href="{% url "homepage" %}#ContactUs" class="block py-2 px-3  rounded md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Contact</a>
+            </li>
+            <li>
+                <a href="{% url "about" %}" class="block py-2 px-3  rounded   md:p-0 text-white md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">About</a>
             </li>
             </ul>
         </div>
@@ -108,7 +112,9 @@
         {% block content %}{% endblock content %}
         
     </main>
-
+    <!--Footer Section Start-->
+    {% include "footer.html" %}
+    <!--Footer Section End-->
     <!--Scripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 </body>

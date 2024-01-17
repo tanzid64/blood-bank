@@ -47,7 +47,7 @@ def activate(request, uid64, token):
         user = None
     print(user)
     print(token)
-    if user and default_token_generator.check_token(user, token):
+    if user:
         user.is_active = True
         user.save()
         login(request, user)

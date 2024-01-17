@@ -6,32 +6,31 @@
 
 <!---->
 
-<form method="post" enctype="multipart/form-data" class="max-w-sm mx-auto border p-5 rounded-xl">
+<form method="post" enctype="multipart/form-data" class="max-w-lg mx-auto border p-5 rounded-xl">
     {% csrf_token %}
     {% for hidden_field in form.hidden_fields %}
         {{ hidden_field }}
     {% endfor %}
+    <div class="">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.blood_group.id_for_label }}">
+            {{ form.blood_group.label }}
+        </label>
+        {{ form.blood_group }}
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.location.id_for_label }}">
+            {{ form.location.label }}
+        </label>
+        {{ form.location }}
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.description.id_for_label }}">
+            {{ form.description.label }}
+        </label>
+        {{ form.description }}
+    </div>
 
-    {% for field in form.visible_fields %}
-        <div class="mb-5">
-            <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-white">
-                {{ field.label }}
-            </label>
 
-            {% if field.name == 'blood_group' %}
-                <select name="{{ field.name }}" id="{{ field.id_for_label }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    {% for choice in field.field.choices %}
-                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                    {% endfor %}
-                </select>
-            {% else %}
-                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            {% endif %}
-        </div>
-    {% endfor %}
-
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <button type="submit" class="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
 </form>
+
+
 
 
 {% endblock content %}
