@@ -32,7 +32,7 @@ class UserRegistrationView(CreateView):
         print("token ", token)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         print("uid ", uid)
-        confirm_link = f"http://127.0.0.1:8000/accounts/active/{uid}/{token}"
+        confirm_link = f"https://bindu-blood-bank.onrender.com/accounts/active/{uid}/{token}"
         send_user_email('Account Confirmation Email', confirm_link, 'confirm_email.html', user.email)
         messages.success(self.request, 'User creation successfull, please check your email to active account.')
         return super().form_valid(form)
