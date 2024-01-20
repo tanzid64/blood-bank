@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.text import slugify
 # Create your models here.
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
@@ -10,11 +10,16 @@ class BaseModel(models.Model):
 
 class Service(BaseModel):
     title = models.CharField(max_length=300)
+    slug = models.SlugField(max_length=350, unique=True, null=True, blank=True)
     description = models.TextField()
     image = models.ImageField(upload_to='core/media/')
 
     def __str__(self) -> str:
         return self.title
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
     
 class ContactUs(models.Model):
     name = models.CharField(max_length = 30)

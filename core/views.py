@@ -1,10 +1,11 @@
 from typing import Any
+from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from account.models import UserProfile, BloodGroup
 from django.contrib import messages
-from .forms import ContactUsForm
+from .forms import ContactUsForm, ServiceForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Models
@@ -12,7 +13,7 @@ from .models import Service, ContactUs
 from history.models import DonationReport
 from django.db.models import Q
 #Views
-from django.views.generic import ListView, DetailView, CreateView,TemplateView
+from django.views.generic import ListView, DetailView, CreateView,TemplateView, UpdateView, DeleteView
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -65,3 +66,35 @@ class AboutView(TemplateView):
     
 class GuideLineView(TemplateView):
     template_name = 'user_guide.html'
+
+# Admin Special
+class AddServicesView(CreateView):
+    template_name = "services.html"
+    model = Service
+    form_class = ServiceForm
+    success_url = reverse_lazy('homepage')
+    def form_valid(self, form):
+        messages.success(self.request, "Service Added Successfully.")
+        return super().form_valid(form)
+    
+
+class EditServicesView(UpdateView):
+    template_name = "services.html"
+    model = Service
+    form_class = ServiceForm
+    success_url = reverse_lazy('homepage')
+    def get_object(self):
+        return Service.objects.get(slug = self.kwargs['slug'])
+    def form_valid(self, form):
+        messages.success(self.request, "Service Updated Successfully")
+        return super().form_valid(form)
+    
+class DeleteServicesView(DeleteView):
+    template_name= 'confirm_delete_service.html'
+    model = Service
+    success_url = reverse_lazy('homepage')
+    def get_object(self):
+        return Service.objects.get(slug = self.kwargs['slug'])
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Service deleted successfully.")
+        return super().delete(request, *args, **kwargs)

@@ -51,7 +51,7 @@
                     </li>
                     {% if request.user.is_staff %}
                     <li>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Admin Panel</a>
+                        <a href="{% url "admin_dashboard" %}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Admin Panel</a>
                     </li>
                     {% endif %}
                     <li>

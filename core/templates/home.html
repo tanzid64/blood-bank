@@ -121,10 +121,22 @@
 
 <!--Active Blood Doner End-->
 <!--Services Start-->
-        <div id="services" class="my-10">
+    <div id="services" class="my-10">
+    {% if request.user.is_staff %}
+    <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700 flex justify-between items-center">
+        <div class="">
+            Sercices
+        </div>
+        <a href="{% url "add_service" %}" class="text-2xl text-blue-600">
+            Add New
+        </a>
+    </div>
+    {% else %}
     <div class="p-4 mb-4 text-white rounded-lg text-4xl font-extrabold bg-slate-700">
         Services
     </div>
+    {% endif %}
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-10 ms-2 md:ms-4 lg:ms-16">
         {% for service in data %}
         <!--Card Here-->
@@ -147,6 +159,20 @@
                 {% else %}
                 <a href="{% url "register" %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Sign Up
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+                {% endif %}
+                {% if request.user.is_staff %}
+                <a href="{% url "edit_service" service.slug %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg  focus:ring-4 focus:outline-none  bg-red-500 hover:bg-red-700 focus:ring-red-800">
+                    Edit
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+                <a href="{% url "delete_service" service.slug %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg  focus:ring-4 focus:outline-none  bg-red-500 hover:bg-red-700 focus:ring-red-800">
+                    Delete
                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                     </svg>

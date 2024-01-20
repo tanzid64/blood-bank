@@ -96,4 +96,6 @@ class UserProfileView(LoginRequiredMixin, ListView):
         context["events"] = DonationRequest.objects.filter(created_by = user)
         return context
     
-
+# Admin Panel
+class AdminDashboardView(TemplateView):
+    template_name = 'admin_dashboard.html'

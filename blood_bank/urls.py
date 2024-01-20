@@ -8,3 +8,6 @@ urlpatterns = [
     path('accounts/', include('account.urls')),
     path('dashboard/', include('history.urls')),
 ]
+
+admin.site.index_title = "Bindu"
+admin.site.site_header = "Bindu Admin Panel"

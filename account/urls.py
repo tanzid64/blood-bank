@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
-from .views import UserRegistrationView, activate, UserLogoutView, UserLoginView, UserProfileView, UserProfileUpdateView
+from .views import UserRegistrationView, activate, UserLogoutView, UserLoginView, UserProfileView, UserProfileUpdateView, AdminDashboardView
 from history.views import DashboardView
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='register'),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', UserLogoutView, name='logout'),
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('admin_dashboard/', AdminDashboardView.as_view(), name='admin_dashboard'),
     path('update_profile/', UserProfileUpdateView.as_view(), name='update_profile'),
     path('active/<str:uid64>/<str:token>/', activate, name='activate'),
 
