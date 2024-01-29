@@ -11,7 +11,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Service, ContactUs
 from account.models import UserProfile, BloodGroup
 from history.models import DonationReport
-from .filters import UserProfileFilter
 from django.db.models import Q
 #Views
 from django.views.generic import ListView, DetailView, CreateView,TemplateView, UpdateView, DeleteView
