@@ -12,4 +12,5 @@ urlpatterns = [
     path('services/delete_service/<slug>/', DeleteServicesView.as_view(), name='delete_service'),
     path('blood_group/<slug:blood_group_slug>/', HomeView.as_view(), name='blood_group_wise_post'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

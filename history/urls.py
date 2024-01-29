@@ -9,4 +9,5 @@ urlpatterns = [
     path('mark_as_managed/<int:id>/', ManagedOfflineView.as_view(), name='managed_offline'),
 
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
