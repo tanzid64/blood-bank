@@ -3,14 +3,15 @@ from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from account.models import UserProfile, BloodGroup
 from django.contrib import messages
 from .forms import ContactUsForm, ServiceForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Models
 from .models import Service, ContactUs
+from account.models import UserProfile, BloodGroup
 from history.models import DonationReport
+from .filters import UserProfileFilter
 from django.db.models import Q
 #Views
 from django.views.generic import ListView, DetailView, CreateView,TemplateView, UpdateView, DeleteView
@@ -23,14 +24,13 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         blood_group_slug = self.kwargs.get('blood_group_slug')
+        donors = UserProfile.objects.all()
         if blood_group_slug:
             blood_group = BloodGroup.objects.get(slug=blood_group_slug)
             donors = UserProfile.objects.filter(blood_group=blood_group)
-        else:
-            donors = UserProfile.objects.all()
 
-        if 'q' in self.request.GET:
-            q = self.request.GET['q']
+        if 'search' in self.request.GET:
+            q = self.request.GET['search']
             multiple_q = Q(blood_group__blood_type__icontains=q) | Q(user__first_name__icontains=q) | Q(user__last_name__icontains=q)
             donors = donors.filter(multiple_q)
 

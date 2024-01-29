@@ -39,15 +39,16 @@ class DashboardView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = DonationRequest.objects.filter(is_accepted=False)
 
-        if 'q' in self.request.GET:
-            search_term = self.request.GET['q']
-            queryset = queryset.filter(
+        if 'search' in self.request.GET:
+            search_term = self.request.GET['search']
+            multiple_q =( 
                 Q(created_by__user__first_name__icontains=search_term) |
                 Q(created_by__user__last_name__icontains=search_term) |
                 Q(blood_group__blood_type__icontains=search_term) |
                 Q(location__icontains=search_term) |
                 Q(description__icontains=search_term)
             )
+            queryset = queryset.filter(multiple_q)
 
         return queryset
 
