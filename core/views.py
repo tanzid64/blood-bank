@@ -28,8 +28,8 @@ class HomeView(TemplateView):
             blood_group = BloodGroup.objects.get(slug=blood_group_slug)
             donors = UserProfile.objects.filter(blood_group=blood_group)
 
-        if 'search' in self.request.GET:
-            q = self.request.GET['search']
+        if 'search_query' in self.request.GET:
+            q = self.request.GET['search_query']
             multiple_q = Q(blood_group__blood_type__icontains=q) | Q(user__first_name__icontains=q) | Q(user__last_name__icontains=q)
             donors = donors.filter(multiple_q)
 
