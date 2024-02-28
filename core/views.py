@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from .forms import ContactUsForm, ServiceForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 # Models
 from .models import Service, ContactUs
@@ -51,6 +52,8 @@ class HomeView(TemplateView):
             return redirect('homepage')
 
         return self.render_to_response(self.get_context_data())
+    
+
 
 # User Mini Profile
 class UserMiniProfileView(DetailView):
@@ -65,6 +68,16 @@ class AboutView(TemplateView):
     
 class GuideLineView(TemplateView):
     template_name = 'user_guide.html'
+
+class ServiceDetails(DetailView):
+    template_name = "service_detail.html"
+    model = Service
+    def get_object(self):
+        return Service.objects.get(slug=self.kwargs['slug'])
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = User.objects.get(username='admin')
+        return context
 
 # Admin Special
 class AddServicesView(CreateView):
@@ -97,3 +110,8 @@ class DeleteServicesView(DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Service deleted successfully.")
         return super().delete(request, *args, **kwargs)
+
+class ContactUsView(ListView):
+    model = ContactUs
+    template_name = 'contact_us_message.html'
+    context_object_name = 'data'

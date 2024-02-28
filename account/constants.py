@@ -2,9 +2,9 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-def send_user_email(subject, confirm_link, template, email_address):
-    body = render_to_string(template,{'confirm_link': confirm_link})
-    send_email = EmailMultiAlternatives(subject, '', to=[email_address])
+def send_user_email(subject, confirm_link, template, user):
+    body = render_to_string(template,{'confirm_link': confirm_link, 'user':user})
+    send_email = EmailMultiAlternatives(subject, '', to=[user.email])
     send_email.attach_alternative(body, 'text/html')
     send_email.send()
 

@@ -51,7 +51,9 @@
                     </li>
                     {% if request.user.is_staff %}
                     <li>
-                        <a href="{% url "admin_dashboard" %}" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white">Admin Panel</a>
+                        
+                            {% include "admin_panel.html" %}
+
                     </li>
                     {% endif %}
                     <li>
@@ -111,7 +113,7 @@
 
     <!--Main Content Area-->
     <!--Banner or Static Description-->
-    <main class="mt-10 p-10">
+    <main class="mt-10 p-10 min-h-100h">
         
         {% include "messages.html" %}
         {% block content %}{% endblock content %}

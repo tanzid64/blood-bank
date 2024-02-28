@@ -83,13 +83,18 @@ WSGI_APPLICATION = 'blood_bank.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=env("DATABASE_LINK"),
+        engine='django_cockroachdb'
+    )
 }
-
 #OnRender Postgre database connection
 # DATABASES = {
 #     'default': dj_database_url.config(
@@ -130,8 +135,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATICFILES_DIRS = [BASE_DIR / "static"] # new
-STATIC_ROOT = BASE_DIR / "staticfiles" 
+
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 # MEDIA_ROOT = BASE_DIR / 'media'

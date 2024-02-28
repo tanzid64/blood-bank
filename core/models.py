@@ -21,7 +21,7 @@ class Service(BaseModel):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
     
-class ContactUs(models.Model):
+class ContactUs(BaseModel):
     name = models.CharField(max_length = 30)
     phone = models.CharField(max_length = 12)
     problem = models.TextField()

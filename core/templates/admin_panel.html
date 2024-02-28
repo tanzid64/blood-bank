@@ -1,0 +1,17 @@
+
+<a id="dropdownDelayButton" data-dropdown-toggle="dropdownDelay" data-dropdown-delay="500" data-dropdown-trigger="hover" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600  hover:text-white" type="button">Admin Panel <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+</svg>
+</a>
+
+<!-- Dropdown menu -->
+<div id="dropdownDelay" class="z-10 hidden  divide-y divide-gray-100 rounded-lg shadow w-44 bg-gray-700">
+    <ul class="py-2 text-sm text-gray-200" aria-labelledby="dropdownDelayButton">
+      <li>
+        <a href="{% url "add_service" %}" class="block px-4 py-2  hover:bg-gray-600 hover:text-white">Add Service</a>
+      </li>
+      <li>
+        <a href="{% url "contact_us_details" %}" class="block px-4 py-2  hover:bg-gray-600 hover:text-white">Message Request</a>
+      </li>
+    </ul>
+</div>

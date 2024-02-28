@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
-from .views import HomeView, UserMiniProfileView, AboutView,GuideLineView, AddServicesView, EditServicesView, DeleteServicesView
+from .views import HomeView, UserMiniProfileView, AboutView,GuideLineView, AddServicesView, EditServicesView, DeleteServicesView, ServiceDetails, ContactUsView
 urlpatterns = [
     path('', HomeView.as_view(), name='homepage'),
     path('about/', AboutView.as_view(), name='about'),
@@ -10,6 +10,8 @@ urlpatterns = [
     path('services/add_service/', AddServicesView.as_view(), name='add_service'),
     path('services/edit_service/<slug>/', EditServicesView.as_view(), name='edit_service'),
     path('services/delete_service/<slug>/', DeleteServicesView.as_view(), name='delete_service'),
+    path('services/details/<slug>/', ServiceDetails.as_view(), name='detail_service'),
+    path('contact/request', ContactUsView.as_view(), name='contact_us_details'),
     path('blood_group/<slug:blood_group_slug>/', HomeView.as_view(), name='blood_group_wise_post'),
 ]
 if settings.DEBUG:
