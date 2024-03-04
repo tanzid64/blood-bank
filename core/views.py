@@ -8,11 +8,14 @@ from .forms import ContactUsForm, ServiceForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
+
 # Models
 from .models import Service, ContactUs
 from account.models import UserProfile, BloodGroup
+from event.models import Event
 from history.models import DonationReport
 from django.db.models import Q
+from django.utils import timezone
 #Views
 from django.views.generic import ListView, DetailView, CreateView,TemplateView, UpdateView, DeleteView
 # Create your views here.
@@ -41,6 +44,7 @@ class HomeView(TemplateView):
         context['total_user'] = UserProfile.objects.all().count()
         context['total_donated'] = DonationReport.objects.all().count()
         context['total_available_donor'] = UserProfile.objects.filter(is_available=True).count()
+        context['events'] = Event.objects.filter(event_date__gte=timezone.now(), is_approved=True)
 
         return context
     # For contact Form
@@ -115,3 +119,9 @@ class ContactUsView(ListView):
     model = ContactUs
     template_name = 'contact_us_message.html'
     context_object_name = 'data'
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["events"] = Event.objects.all()
+        return context
+    

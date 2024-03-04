@@ -6,5 +6,6 @@ class Event(BaseModel):
     title = models.CharField(max_length=255)
     created_by = models.ForeignKey(UserProfile, related_name='event', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
-    date = models.DateField()
+    event_date = models.DateField()
     location = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="event/images/")

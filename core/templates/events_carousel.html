@@ -1,28 +1,41 @@
 {% load static %}
-<div id="default-carousel" class="relative w-full" data-carousel="slide">
+<div id="default-carousel" class="relative w-full" data-carousel="static">
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
          <!-- Item 1 -->
+        <div class=" bg-slate-700 duration-700 ease-in-out" data-carousel-item>
+            <div class="absolute w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 ">
+                
+                    <h5 class="mb-2 text-5xl font-bold tracking-tight text-center text-white">Upcoming Events</h5>
+
+            </div>
+        </div>
+        {% for event in events %}
         <div class=" hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{% static "carousel_1.png" %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <figcaption class="absolute px-4 text-lg text-white bottom-6">
-                <p>Do you want to get notified when a new component is added to Flowbite?</p>
-            </figcaption>
+            <div class="grid grid-cols-4 absolute w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+
+                <div class="col-span-3">
+                    <img src="{{event.image.url}}" class=" block w-full object-cover rounded-t-lg" alt="...">
+                </div>
+                <div class="p-5 bg-slate-700 flex flex-col justify-center items-start">
+                
+                    <h5 class="text-2xl font-bold tracking-tight text-white">{{event.title}}</h5>
+
+                <p class="mb-3 font-normal text-white">Posted By: {{event.created_by.user.first_name}} {{event.created_by.user.last_name}}</p>
+                <p class="mb-3 font-normal text-white">Date: {{event.date}}</p>
+                <p class="mb-3 font-normal text-white">Posted By: {{event.location}}</p>
+                </div>
+            </div>
         </div>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{% static "carousel_1.png" %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Image caption</figcaption>
-        </div>
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="{% static "carousel_1.png" %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Image caption</figcaption>
-        </div>
+        {% endfor %}
+
+        
     </div>
     <!-- Slider indicators -->
     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
         <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+        {% comment %} <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button> {% endcomment %}
     </div>
     <!-- Slider controls -->
     <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
