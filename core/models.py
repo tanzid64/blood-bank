@@ -30,3 +30,4 @@ class ContactUs(BaseModel):
         return self.name
     class Meta:
         verbose_name_plural = "Contact Us"
+

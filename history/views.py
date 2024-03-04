@@ -39,8 +39,8 @@ class DashboardView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = DonationRequest.objects.filter(is_accepted=False)
 
-        if 'search' in self.request.GET:
-            search_term = self.request.GET['search']
+        if 'search_query' in self.request.GET:
+            search_term = self.request.GET['search_query']
             multiple_q =( 
                 Q(created_by__user__first_name__icontains=search_term) |
                 Q(created_by__user__last_name__icontains=search_term) |
@@ -51,6 +51,11 @@ class DashboardView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(multiple_q)
 
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_events'] = DonationRequest.objects.filter(is_accepted=False, created_by = self.request.user.profile)
+        return context
 
 
 class DonationRequestAcceptView(LoginRequiredMixin, View):

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'core',
     'account',
     'history',
+    'event',
 ]
 
 TAILWIND_APP_NAME = 'theme'
