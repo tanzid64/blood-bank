@@ -13,11 +13,13 @@ django-browser-reload
 django-cockroachdb
 django-environ
 django-tailwind
+gunicorn
 idna
 Jinja2
 markdown-it-py
 MarkupSafe
 mdurl
+packaging
 pillow
 psycopg2-binary
 Pygments
@@ -33,3 +35,4 @@ types-python-dateutil
 typing_extensions
 tzdata
 urllib3
+whitenoise
