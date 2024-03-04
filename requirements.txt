@@ -35,4 +35,3 @@ types-python-dateutil
 typing_extensions
 tzdata
 urllib3
-whitenoise
