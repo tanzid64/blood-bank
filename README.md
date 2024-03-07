@@ -59,4 +59,4 @@ To run this project, you will need to add the following environment variables to
 `EMAIL_HOST_PASSWORD`
 `DATABASE_LINK`
 
-
+Live Link: https://bindu-blood-bank.onrender.com
