@@ -12,7 +12,7 @@ class Service(BaseModel):
     title = models.CharField(max_length=300)
     slug = models.SlugField(max_length=350, unique=True, null=True, blank=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='core/media/')
+    image = models.ImageField(upload_to='oldBindu/services')
 
     def __str__(self) -> str:
         return self.title

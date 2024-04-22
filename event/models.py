@@ -8,4 +8,4 @@ class Event(BaseModel):
     is_approved = models.BooleanField(default=False)
     event_date = models.DateField()
     location = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="event/images/")
+    image = models.ImageField(upload_to="oldBindu/events")

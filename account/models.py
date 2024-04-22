@@ -15,7 +15,7 @@ class BloodGroup(BaseModel):
 
 class UserProfile(BaseModel):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='account/images/')
+    image = models.ImageField(upload_to='oldBindu/profilePictures')
     gender = models.CharField(max_length=10, choices=GENDER_TYPE, null=True, blank=True)
     blood_group = models.ForeignKey(BloodGroup, related_name='profile', on_delete=models.CASCADE)
     total_donated = models.IntegerField(default=0)
