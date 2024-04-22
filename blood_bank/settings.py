@@ -129,7 +129,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR/ 'staticfiles'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 MEDIA_URL = 'media/'
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -147,11 +147,12 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 # Setup Cloudnary cloud as file storage
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env("CLOUDINARY_CLOUD_NAME"),
     'API_KEY': env("CLOUDINARY_API_KEY"),
     'API_SECRET': env("CLOUDINARY_API_SECRET"),
+    'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'my-manifest-directory')
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
